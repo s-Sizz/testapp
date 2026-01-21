@@ -34,11 +34,11 @@ jobs:
         #   CODE_SIGN_IDENTITY: ""
         #   PROVISIONING_PROFILE_SPECIFIER: ""
           
-      # - name: Package for SideStore (IPA)
-      #   run: |
-      #     mkdir -p Payload
-      #     cp -r target/dx/testapp/release/ios/Testapp.app Payload/
-      #     zip -r Testapp.ipa Payload
+      - name: Package for SideStore (IPA)
+        run: |
+          mkdir -p Payload
+          cp -r target/dx/testapp/release/ios/Testapp.app Payload/
+          zip -r Testapp.ipa Payload
       
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
