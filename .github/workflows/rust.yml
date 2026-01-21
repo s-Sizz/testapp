@@ -27,12 +27,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}       
           
       - name: Build for iOS
-        run: dx bundle --platform ios --release --device true
-        env:
-          CODE_SIGNING_ALLOWED: "no"
-          CODE_SIGNING_REQUIRED: "no"
-          CODE_SIGN_IDENTITY: ""
-          PROVISIONING_PROFILE_SPECIFIER: ""
+        run: dx bundle --platform ios --release --device true  --codesign false
+        # env:
+        #   CODE_SIGNING_ALLOWED: "no"
+        #   CODE_SIGNING_REQUIRED: "no"
+        #   CODE_SIGN_IDENTITY: ""
+        #   PROVISIONING_PROFILE_SPECIFIER: ""
           
       # - name: Package for SideStore (IPA)
       #   run: |
