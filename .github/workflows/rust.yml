@@ -27,16 +27,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}       
           
       - name: Build for iOS
-        run: |
-          ls $HOME/.cargo/bin
-          dx bundle --platform ios --release --device true
-
-      - name: Package for SideStore (IPA)
-        run: |
-          mkdir -p Payload
-          cp -r target/dx/testapp/release/ios/Testapp.app Payload/
-          zip -r Testapp.ipa Payload
-
+        run: dx bundle --platform ios --release --device true
+        env:
+          CODE_SIGNING_ALLOWED: "no"
+          CODE_SIGNING_REQUIRED: "no"
+          CODE_SIGN_IDENTITY: ""
+          PROVISIONING_PROFILE_SPECIFIER: ""
+          
+      # - name: Package for SideStore (IPA)
+      #   run: |
+      #     mkdir -p Payload
+      #     cp -r target/dx/testapp/release/ios/Testapp.app Payload/
+      #     zip -r Testapp.ipa Payload
       
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
