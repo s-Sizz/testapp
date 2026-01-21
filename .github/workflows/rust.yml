@@ -22,8 +22,10 @@ jobs:
         uses: cargo-bins/cargo-binstall@main
 
       - name: Install Dioxus CLI via binstall
-        run: cargo binstall dioxus-cli -y --force
-  
+        run: | 
+          cargo binstall dioxus-cli -y
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          
       - name: Build for iOS
         run: dx bundle --platform ios --release --device true
 
