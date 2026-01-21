@@ -15,16 +15,18 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-apple-ios, aarch64-apple-ios-sim
-
+  
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
-
       - name: Install cargo-binstall
         uses: cargo-bins/cargo-binstall@main
 
       - name: Install Dioxus CLI via binstall
         run: cargo binstall dioxus-cli -y
-
+        
+      - name: echo Path
+        run: echo $PATH
+  
       - name: Build for iOS
         run: dx bundle --platform ios --release --device true
 
