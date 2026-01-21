@@ -27,7 +27,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}       
           
       - name: Build for iOS
-        run: dx bundle --codesign false --platform ios --release
+        run: dx bundle --codesign false --platform ios --release --target aarch64-apple-ios
         # env:
         #   CODE_SIGNING_ALLOWED: "no"
         #   CODE_SIGNING_REQUIRED: "no"
