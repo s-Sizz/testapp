@@ -38,6 +38,9 @@ jobs:
         run: |
           mkdir -p Payload
           cp -r target/dx/testapp/release/ios/Testapp.app Payload/
+          
+          chmod +x Payload/Testapp.app/testapp
+          
           zip -r Testapp.ipa Payload
       
       - name: Upload IPA Artifact
