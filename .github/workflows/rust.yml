@@ -24,7 +24,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
 
       - name: Install cargo-binstall
-        uses: cargo-bins/cargo-binstall@v1
+        uses: uses: cargo-bins/cargo-binstall@main
 
       - name: Install Dioxus CLI via binstall
         run: cargo binstall dioxus-cli -y
