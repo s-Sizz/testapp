@@ -26,13 +26,17 @@ jobs:
         run: cargo binstall dioxus-cli -y
 
       - name: Build for iOS
-        run: dx build --platform ios --release
-      
-      - name: List files for debugging
-        run: find . -maxdepth 3 -not -path '*/.*'
+        run: dx bundle --platform ios --release --device true
 
-      - name: Upload Build Artifacts
+      - name: Package for SideStore (IPA)
+        run: |
+          mkdir -p Payload
+          cp -r target/dx/testapp/release/ios/Testapp.app Payload/
+          zip -r Testapp.ipa Payload
+
+      
+      - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ios-build
-          path: dist/ios/
+          name: testapp-sideload
+          path: Testapp.ipa
