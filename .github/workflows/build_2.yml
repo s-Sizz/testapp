@@ -1,0 +1,46 @@
+name: Build iOS App 2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build Binary for Physical Device
+        run: cargo build --release --target aarch64-apple-ios
+
+      - name: Package Manual IPA
+        run: |
+          mkdir -p Payload/Testapp.app
+          
+          cp target/aarch64-apple-ios/release/testapp Payload/Testapp.app/testapp
+          
+          cp Info.plist Payload/Testapp.app/Info.plist
+          
+          chmod +x Payload/Testapp.app/testapp
+          
+          rm -rf Payload/Testapp.app/_CodeSignature
+          xattr -cr Payload/Testapp.app
+          
+          otool -l Payload/Testapp.app/testapp | grep -A 3 "LC_VERSION_MIN_IPHONEOS" || true
+          
+          zip -ry Testapp.ipa Payload
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: testapp-sideload
+          path: Testapp.ipa
