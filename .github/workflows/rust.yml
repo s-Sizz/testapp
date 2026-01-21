@@ -40,8 +40,14 @@ jobs:
           cp -r target/dx/testapp/release/ios/Testapp.app Payload/
           
           chmod +x Payload/Testapp.app/testapp
+          xattr -cr Payload/Testapp.app
           
-          zip -r Testapp.ipa Payload
+          if [ ! -f Payload/Testapp.app/testapp ]; then
+            echo "ERROR: Executable 'testapp' not found in bundle!"
+            exit 1
+          fi
+          
+          zip -ry Testapp.ipa Payload
       
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v4
