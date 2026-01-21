@@ -1,10 +1,6 @@
 name: Build iOS App
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -24,7 +20,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
 
       - name: Install cargo-binstall
-        uses: uses: cargo-bins/cargo-binstall@main
+        uses: cargo-bins/cargo-binstall@main
 
       - name: Install Dioxus CLI via binstall
         run: cargo binstall dioxus-cli -y
